@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-class Book(Base):
+class Request(Base):
    __tablename__ = 'request'
 
    id = Column(Integer, primary_key=True)

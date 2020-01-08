@@ -4,5 +4,5 @@ COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
-RUN python database-setup.py
+RUN python database_setup.py
 CMD ["app.py"]
