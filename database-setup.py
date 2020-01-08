@@ -1,5 +1,5 @@
-import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+import sys, datetime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -14,7 +14,7 @@ class Book(Base):
    version = Column(String(64), nullable=False)
    owner = Column(String(64), nullable=False)
    status = Column(String(64), nullable=False)
-   date = Column(Date, default=_get_date)
+   date = Column(DateTime, default=datetime.datetime.utcnow)
 
 engine = create_engine('sqlite:///requests.db')
 
