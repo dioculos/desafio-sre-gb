@@ -16,6 +16,17 @@ class Request(Base):
    status = Column(String(64), nullable=False)
    date = Column(DateTime, default=datetime.datetime.utcnow)
 
+   @property
+   def serialize(self):
+      return {
+      'id': self.id,
+      'component': self.component,
+      'version': self.version,
+      'owner': self.owner,
+      'status': self.status,
+      'date': self.date,
+   }
+
 engine = create_engine('sqlite:///requests.db')
 
 Base.metadata.create_all(engine)
