@@ -47,20 +47,21 @@ def apiFunctionId(id):
       return get_request(id)
 
    elif request.method == 'PUT':
-      req_data = request.get_json()   
+      req_data = request.get_json()
+      if not req_data:
+           abort(Response('Error: no json sent', 400))
+      if 'component' not in req_data:
+           abort(Response('Error: component is missing', 400))
       component = req_data['component']
-      if not component:
-           abort(400, error_message='component is missing')
+      if 'version' not in req_data:
+           abort(Response('Error: version is missing', 400))
       version = req_data['version']
-      if not version:
-           abort(400, error_message='version is missing')
+      if 'owner' not in req_data:
+           abort(Response('Error: owner is missing', 400))
       owner = req_data['owner']
-      if not owner:
-           abort(400, error_message='owner is missing')
+      if 'status' not in req_data:
+           abort(Response('Error: status is missing', 400))
       status = req_data['status']
-      if not status:
-           abort(400, error_message='status is missing')
-      date = datetime.datetime.utcnow
       return updateRequest(id, component, version, owner, status, date)
 
    elif request.method == 'DELETE':
