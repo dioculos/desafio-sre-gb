@@ -2,8 +2,8 @@
 # Feito em Python, contido em um container Docker
 # 2019 - Andrei Oliveira
 import datetime
-from flask import Flask, render_template, request, redirect, url_for
-from flask_restful import Resource, Api
+from flask import Flask, render_template, request, redirect, url_for, Response
+from flask_restful import Resource, Api, abort
 from flask import jsonify
 
 from sqlalchemy import create_engine
@@ -25,9 +25,19 @@ def apiFunction():
       return get_requests()
    elif request.method == 'POST':
       req_data = request.get_json()   
+      if not req_data:
+           abort(Response('Error: no json sent', 400))
+      if 'component' not in req_data:
+           abort(Response('Error: component is missing', 400))
       component = req_data['component']
+      if 'version' not in req_data:
+           abort(Response('Error: version is missing', 400))
       version = req_data['version']
+      if 'owner' not in req_data:
+           abort(Response('Error: owner is missing', 400))
       owner = req_data['owner']
+      if 'status' not in req_data:
+           abort(Response('Error: status is missing', 400))
       status = req_data['status']
       return registerRequest(component, version, owner, status)
 
@@ -39,9 +49,17 @@ def apiFunctionId(id):
    elif request.method == 'PUT':
       req_data = request.get_json()   
       component = req_data['component']
+      if not component:
+           abort(400, error_message='component is missing')
       version = req_data['version']
+      if not version:
+           abort(400, error_message='version is missing')
       owner = req_data['owner']
+      if not owner:
+           abort(400, error_message='owner is missing')
       status = req_data['status']
+      if not status:
+           abort(400, error_message='status is missing')
       date = datetime.datetime.utcnow
       return updateRequest(id, component, version, owner, status, date)
 
