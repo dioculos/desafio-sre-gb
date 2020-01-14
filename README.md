@@ -42,10 +42,21 @@ Abaixo um exemplo em cURL para enviar um novo registro a API:
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"component":"server-interface","version":"2.1","owner":"aoliveira","status":"deployed"}' \
-  http://127.0.0.1:5000/api/
+  http://127.0.0.1:5000/api
 
 
-Ao receber um novo registro corretamente, a API persiste este registro em um banco de dados, retornando o registro completo com identificação única (id), data e hora que o registro foi realizado no banco de dados, em um formato JSON.
+Ao receber um novo registro corretamente, a API persiste este registro em um banco de dados, retornando o registro completo com identificação única (id), data e hora que o registro foi realizado no banco de dados, em um formato JSON, como no exemplo a seguir:
+
+{
+  "Request": {
+    "component": "server-interface",
+    "date": "Tue, 14 Jan 2020 02:37:42 GMT",
+    "id": 1,
+    "owner": "aoliveira",
+    "status": "deployed",
+    "version": "2.1"
+  }
+}
 
 A API também oferece o resgate de registros individuais através de sua ID, bem como a atualização e remoção de tais registros, utilizando os verbos HTTP GET, PUT e DELETE.
 
